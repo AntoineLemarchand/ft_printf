@@ -6,7 +6,7 @@
 /*   By: alemarch <alemarch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 22:09:05 by alemarch          #+#    #+#             */
-/*   Updated: 2021/12/06 12:30:42 by alemarch         ###   ########.fr       */
+/*   Updated: 2021/12/06 16:48:04 by alemarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,18 @@ static int	ft_isconv(char c)
 
 static t_format	ft_init_format(int reload)
 {
-	t_format	format;
+	t_format	*format;
 
-	format.plus = 0;
-	format.minus = 0;
-	format.dot = 0;
-	format.hash = 0;
-	format.space = 0;
-	format.minwidth = 0;
 	if (reload)
-		format.size = 0;
+		format = malloc(sizeof(t_format));
+	format->plus = 0;
+	format->minus = 0;
+	format->dot = 0;
+	format->hash = 0;
+	format->space = 0;
+	format->minwidth = 0;
+	if (reload)
+		format->size = 0;
 	return (format);
 }
 
@@ -45,58 +47,57 @@ static int	ft_load_format(char *str, t_format format, int index)
 	while (!ft_iconv(str[index]))
 	{
 		if (str[index] == '+')
-			format.plus = 1;
+			format->plus = 1;
 		else if (str[index] == '-')
-			format.minus = 1;
+			format->minus = 1;
 		else if (str[index] == '.')
-			format.dot = 1;
+			format->dot = 1;
 		else if (str[index] == '#')
-			format.hash = 1;
+			format->hash = 1;
 		else if (str[index] == ' ')
-			format.space = 1;
+			format->space = 1;
 		else if (ft_isdigit(str[index]))
-			format.minwidth = ft_atoi(str[index]);
+			format->minwidth = ft_atoi(str[index]);
 		index += 1;
 	}
 	return (index);
 }
 
-static int	ft_managearg(char *str, va_list args, int index)
+static int	ft_managearg(char *str, va_list args, int index, t_format format)
 {
-	t_format	format;
-	int			size;
+	t_format	*format;
 
 	format = ft_init_format(0);
 	index = ft_load_format(str, format, index);
 	if (str[index] == 'c')
-		size += ft_manage_char(format, args);
+		format->size += ft_manage_char(format, args);
 	else if (str[index] == 's')
-		size += ft_manage_str(format, args);
+		format->size += ft_manage_str(format, args);
 	else if (str[index] == 'p')
-		size += ft_manage_addr(format, args);
+		format->size += ft_manage_addr(format, args);
 	else if (str[index] == 'd' || str[index] == 'i')
-		size += ft_manage_nbr(format, args);
+		format->size += ft_manage_nbr(format, args);
 	else if (str[index] == 'u')
-		size += ft_manage_unsigned(format, args);
+		format->size += ft_manage_unsigned(format, args);
 	else if (str[index] == 'x')
-		size += ft_manage_hex(format, args, 0);
+		format->size += ft_manage_hex(format, args, 0);
 	else if (str[index] == 'X')
-		size += ft_manage_hex(format, args, 1);
+		format->size += ft_manage_hex(format, args, 1);
 	else if (str[index] == '%')
-		size += write(1, '%' 1);
+		format->size += write(1, '%' 1);
 	index++;
 	return (index);
 }
 
 int	ft_printf(const char *str, ...)
 {
-	t_format	print;
+	t_format	*format;
 	va_list		args;
 	int			i;
 	int			size;
 
 	size = 0;
-	print = ft_init_struct(1);
+	format = ft_init_struct(1);
 	va_start(args, str);
 	while (str[i])
 	{
@@ -109,5 +110,6 @@ int	ft_printf(const char *str, ...)
 		}
 	}
 	va_end(args);
-	return (print.size);
+	free(format);
+	return (size);
 }

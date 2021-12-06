@@ -6,7 +6,7 @@
 /*   By: alemarch <alemarch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 22:08:36 by alemarch          #+#    #+#             */
-/*   Updated: 2021/12/04 14:35:08 by antoine          ###   ########.fr       */
+/*   Updated: 2021/12/06 17:01:42 by alemarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include<unistd.h>
 # include<stddef.h>
 # include<stdlib.h>
+# include<stdarg.h>
+# include"libft.a"
 
 typedef struct s_format {
 	int		plus;
