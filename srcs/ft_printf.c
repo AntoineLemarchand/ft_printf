@@ -6,7 +6,7 @@
 /*   By: alemarch <alemarch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 22:09:05 by alemarch          #+#    #+#             */
-/*   Updated: 2021/12/06 16:48:04 by alemarch         ###   ########.fr       */
+/*   Updated: 2021/12/06 22:58:33 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	ft_isconv(char c)
 		|| c == '%');
 }
 
-static t_format	ft_init_format(int reload)
+static t_format	*ft_init_format(int reload)
 {
 	t_format	*format;
 
@@ -42,9 +42,9 @@ static t_format	ft_init_format(int reload)
 	return (format);
 }
 
-static int	ft_load_format(char *str, t_format format, int index)
+static int	ft_load_format(char *str, t_format *format, int index)
 {
-	while (!ft_iconv(str[index]))
+	while (!ft_isconv(str[index]))
 	{
 		if (str[index] == '+')
 			format->plus = 1;
@@ -57,16 +57,14 @@ static int	ft_load_format(char *str, t_format format, int index)
 		else if (str[index] == ' ')
 			format->space = 1;
 		else if (ft_isdigit(str[index]))
-			format->minwidth = ft_atoi(str[index]);
+			format->minwidth = str[index] - 48;
 		index += 1;
 	}
 	return (index);
 }
 
-static int	ft_managearg(char *str, va_list args, int index, t_format format)
+static int	ft_managearg(char *str, va_list args, int index, t_format *format)
 {
-	t_format	*format;
-
 	format = ft_init_format(0);
 	index = ft_load_format(str, format, index);
 	if (str[index] == 'c')
@@ -84,7 +82,7 @@ static int	ft_managearg(char *str, va_list args, int index, t_format format)
 	else if (str[index] == 'X')
 		format->size += ft_manage_hex(format, args, 1);
 	else if (str[index] == '%')
-		format->size += write(1, '%' 1);
+		format->size += write(1, "%", 1);
 	index++;
 	return (index);
 }
@@ -97,15 +95,15 @@ int	ft_printf(const char *str, ...)
 	int			size;
 
 	size = 0;
-	format = ft_init_struct(1);
+	format = ft_init_format(1);
 	va_start(args, str);
 	while (str[i])
 	{
 		if (str[i] == '%')
-			i = ft_managearg(str, args, i + 1);
+			i = ft_managearg((char *)str, args, i + 1, format);
 		else
 		{
-			write(1, str[i++], 1);
+			write(1, &str[i++], 1);
 			size += 1;
 		}
 	}

@@ -3,7 +3,6 @@ SRCS		= $(addprefix srcs/, \
 				nbr_manager.c \
 				hex_manager.c \
 				ft_printf.c \
-				main.c \
 				)
 
 
@@ -18,12 +17,13 @@ CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -I includes
 
 %.c%.o:
-			${CC} ${CFLAGS} $< -o ${<:.c=.o}
+			${CC} ${CFLAGS} $< -o ${<:.c=.o} -L libft -l lift
 
 all:		${NAME}
 
 lib: 
 			make -C libft
+			cp libft/includes/libft.h includes
 
 ${NAME}:	lib ${OBJS}
 			ar rcs ${NAME} ${OBJS}

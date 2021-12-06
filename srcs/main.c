@@ -1,4 +1,5 @@
 #include"libftprintf.h"
+#include<stdio.h>
 
 int	main(void)
 {
@@ -33,8 +34,9 @@ int	main(void)
 	printf("je me donne a %u pourcents, voire %u pourcents\n", 42, -42);
 	ft_printf("je me donne a %u pourcents, voire %u pourcents\n", 42, -42);
 	
-	printf("l'uint max c'est %u", 4294967295);
-	ft_printf("l'uint max c'est %u", 4294967295);
+	unsigned int nb = 4294967295;
+	printf("l'uint max c'est %u", nb);
+	ft_printf("l'uint max c'est %u", nb);
 
 	printf("0 = %u", 0);
 	ft_printf("0 = %u", 0);
@@ -56,7 +58,7 @@ int	main(void)
 	ft_printf("l'int min c'est %x", -2147483647);
 
 	// ptr
-	char str = "ma maison";
+	char *str = "ma maison";
 	printf("l'adresse de ma maison %p\n", str);
 	ft_printf("l'adresse de ma maison %p\n", str);
 
