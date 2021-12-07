@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftprintf.h                                      :+:      :+:    :+:   */
+/*   str_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alemarch <alemarch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/24 22:08:36 by alemarch          #+#    #+#             */
-/*   Updated: 2021/12/07 11:00:44 by alemarch         ###   ########.fr       */
+/*   Created: 2021/12/07 12:31:03 by alemarch          #+#    #+#             */
+/*   Updated: 2021/12/07 12:52:40 by alemarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
-# include"libft.h"
-# include<stdarg.h>
+#include"ft_printf.h"
 
-int	ft_putint(int nb);
-int	ft_putuint(unsigned int nb);
-int	ft_puthex(unsigned int nb, int big);
-int	ft_putaddr(unsigned long ptr);
-int	ft_printf(const char *str, ...);
-#endif
+int	ft_putchar(int c)
+{
+	int	size;
+
+	size = 0;
+	size += write(1, &c, 1);
+	return (size);
+}
+
+int	ft_putstr(char *s)
+{
+	int	size;
+
+	size = 0;
+	if (!s)
+		return (write(1, "(null)", 6));
+	while (*s)
+		size += write(1, s++, 1);
+	return (size);
+}

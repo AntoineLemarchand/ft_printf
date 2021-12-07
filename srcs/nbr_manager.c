@@ -6,11 +6,11 @@
 /*   By: alemarch <alemarch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 10:45:33 by alemarch          #+#    #+#             */
-/*   Updated: 2021/12/07 11:29:59 by alemarch         ###   ########.fr       */
+/*   Updated: 2021/12/07 12:43:14 by alemarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libftprintf.h"
+#include"ft_printf.h"
 
 int	ft_putint(int nb)
 {
@@ -26,8 +26,8 @@ int	ft_putint(int nb)
 	}
 	else
 		n = nb;
-	if (n > 10)
-		ft_putint(n / 10);
+	if (n > 9)
+		size += ft_putint(n / 10);
 	c = n % 10 + 48;
 	size += write(1, &c, 1);
 	return (size);
@@ -39,8 +39,8 @@ int	ft_putuint(unsigned int nb)
 	char	c;
 
 	size = 0;
-	if (nb > 10)
-		ft_putint(nb / 10);
+	if (nb > 9)
+		size += ft_putint(nb / 10);
 	c = nb % 10 + 48;
 	size += write(1, &c, 1);
 	return (size);
