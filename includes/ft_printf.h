@@ -6,16 +6,16 @@
 /*   By: alemarch <alemarch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 22:08:36 by alemarch          #+#    #+#             */
-/*   Updated: 2021/12/07 12:35:59 by alemarch         ###   ########.fr       */
+/*   Updated: 2021/12/07 14:16:40 by alemarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 # include<stdarg.h>
-# include"libft.h"
+# include<unistd.h>
 
-int ft_putchar(int c);
+int	ft_putchar(int c);
 int	ft_putstr(char *s);
 int	ft_putint(int nb);
 int	ft_putuint(unsigned int nb);
