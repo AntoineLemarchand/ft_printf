@@ -6,30 +6,46 @@
 /*   By: alemarch <alemarch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 12:35:37 by alemarch          #+#    #+#             */
-/*   Updated: 2021/12/06 23:07:37 by antoine          ###   ########.fr       */
+/*   Updated: 2021/12/07 11:30:20 by alemarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"libftprintf.h"
- 
-int	ft_manage_addr(t_format *format, va_list args)
-{
-	int	ret;
-	(void)format;
-	(void)args;
 
-	ret = 0;
-	return (ret);
+static int	ft_putlhex(unsigned long nb)
+{
+	char	*base;
+	int		size;
+
+	size = 0;
+	base = "0123456789abcdef";
+	if (nb > 16)
+		ft_putlhex(nb / 16);
+	size += write(1, &base[nb % 16], 1);
+	return (size);
 }
 
-
-int	ft_manage_hex(t_format *format, va_list args, int big)
+int	ft_putaddr(unsigned long ptr)
 {
-	int ret;
-	(void)format;
-	(void)args;
-	(void)big;
+	int	size;
 
-	ret = 0;
-	return (ret);
+	size = write(1, "0x", 2);
+	size += ft_putlhex(ptr);
+	return (size);
+}
+
+int	ft_puthex(unsigned int nb, int big)
+{
+	char	*base;
+	int		size;
+
+	size = 0;
+	if (big)
+		base = "0123456789ABCDEF";
+	else
+		base = "0123456789abcdef";
+	if (nb > 16)
+		ft_puthex(nb / 16, big);
+	size += write(1, &base[nb % 16], 1);
+	return (size);
 }

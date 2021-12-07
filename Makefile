@@ -1,7 +1,6 @@
 SRCS		= $(addprefix srcs/, \
-			    alpha_manager.c \
-				nbr_manager.c \
-				hex_manager.c \
+			  	hex_manager.c \
+			  	nbr_manager.c \
 				ft_printf.c \
 				)
 
